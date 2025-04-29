@@ -22,7 +22,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {	// "3456(�
 	// Сплитим данные 
 	splitedData := strings.Split(data, ",")	
 	if len(splitedData) != 3 {
-		return 0, "", 0, fmt.Errorf("Длинна %d не != e", len(splitedData))
+		return 0, "", 0, fmt.Errorf("lанные переданы неверно")
 	}
 
 	// Вычленяем из слайса кол-во шагов

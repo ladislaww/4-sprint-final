@@ -21,7 +21,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 	// Разделяем данные по запятой
 	splitedData := strings.Split(data, ",")
 	if len(splitedData) != 2 {
-		return 0, 0, fmt.Errorf("Длинна %d не != 2", len(splitedData))
+		return 0, 0, fmt.Errorf("Неврное переданы данные в слайс")
 	}
 
 	// Вычленяем из слайса кол-во шагов
@@ -64,7 +64,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	
 	
 	// Сохраняем все данные в одну строку 
-	resultStr := fmt.Sprintf("Количество шагов: %d.\nДистанция составила: %.2f.\n Вы сожгли: %.2f ккал.", numberOfSteps, distance, walkingCalories)
+	resultStr := fmt.Sprintf("Количество шагов: %d.\nДистанция составила: %.2f.\nВы сожгли: %.2f ккал.", numberOfSteps, distance, walkingCalories)
 
 	return resultStr
 
