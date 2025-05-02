@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 	"github.com/Yandex-Practicum/tracker/internal/spentcalories"
+	"log"
 
 )
 
@@ -50,22 +51,36 @@ func DayActionInfo(data string, weight, height float64) string {
 	// Парсим данные 
 	numberOfSteps, walkingDuration, err := parsePackage(data)
 	if err != nil {
+		log.Printf("Ошибка при парсинге данных: %v", err)
 		return ""
 	} 
-	if numberOfSteps <= 0 || walkingDuration <= 0 { 
+
+	if numberOfSteps <= 0 {
+		log.Println("Количество шагов меньше или равно 0 — возврат пустой строки.")
 		return ""
-	} 
-	
-	// Получаем дистанцию в метрах 
-	distance :=  float64(numberOfSteps) * stepLength / mInKm   
-	
-	// Реализовать подсчет ккал с помощью WalkingSpentCalories()
-	walkingCalories, _ := spentcalories.WalkingSpentCalories(numberOfSteps, weight, height, walkingDuration)
-	
-	
-	// Сохраняем все данные в одну строку 
-	resultStr := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.", numberOfSteps, distance, walkingCalories)
+	}
+
+	if walkingDuration <= 0 {
+		log.Println("Продолжительность ходьбы нулевая или отрицательная — возврат пустой строки.")
+		return ""
+	}
+
+	// Получаем дистанцию в километрах
+	distance := float64(numberOfSteps) * stepLength / mInKm   
+
+	// Подсчет калорий
+	walkingCalories, err := spentcalories.WalkingSpentCalories(numberOfSteps, weight, height, walkingDuration)
+	if err != nil {
+		log.Printf("Ошибка при расчёте калорий: %v", err)
+		return ""
+	}
+
+	// Финальный вывод
+	resultStr := fmt.Sprintf(
+		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
+		numberOfSteps, distance, walkingCalories,
+	)
 
 	return resultStr
-
+	
 }

@@ -95,7 +95,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) { // "345
 		if err != nil {
 		return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\n Дистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		 activity, 
 		 activityDuration.Hours(), 
 		 dist, 
@@ -106,7 +106,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) { // "345
 		if err != nil {
 			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\n Дистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		 activity, 
 		 activityDuration.Hours(), 
 		 dist, 
