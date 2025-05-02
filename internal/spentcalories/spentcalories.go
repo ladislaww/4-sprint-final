@@ -30,8 +30,8 @@ func parseTraining(data string) (int, string, time.Duration, error) {	// "3456(�
 	if err != nil {
 		return 0, "", 0, fmt.Errorf("incorrect number of steps entered")
 	} 
-	if numberOfSteps == 0 {
-		return 0, "", 0, fmt.Errorf("the number of steps cannot be zero")
+	if numberOfSteps <= 0 {
+		return 0, "", 0, fmt.Errorf("the number of steps cannot be zero or negative")
 	}
 
 	// Вычленяем из слайса вид активности
@@ -42,8 +42,8 @@ func parseTraining(data string) (int, string, time.Duration, error) {	// "3456(�
 	if err != nil {
 		return 0, "", 0, fmt.Errorf("activity duration parsing error")
 	}
-	if activityDuration == 0 {
-		return 0, "", 0, fmt.Errorf("the duration time of an activity cannot be zero")
+	if activityDuration <= 0 {
+		return 0, "", 0, fmt.Errorf("the duration time of an activity cannot be zero or negative")
 	}
 
 	return numberOfSteps, activity, activityDuration, nil
@@ -64,6 +64,10 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 	
 	// Проверяем duration
 	if duration <=0 {
+		return 0 
+	}
+
+	if steps <=0 {
 		return 0 
 	}
 
@@ -91,7 +95,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) { // "345
 		if err != nil {
 		return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f\n Дистанция: %.2f км\nСкорость: %.2f км/ч\nСожгли калорий: %.2f",
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\n Дистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		 activity, 
 		 activityDuration.Hours(), 
 		 dist, 
@@ -102,7 +106,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) { // "345
 		if err != nil {
 			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f\n Дистанция: %.2f км\nСкорость: %.2f км/ч\nСожгли калорий: %.2f",
+		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\n Дистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		 activity, 
 		 activityDuration.Hours(), 
 		 dist, 
@@ -118,8 +122,8 @@ func TrainingInfo(data string, weight, height float64) (string, error) { // "345
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	
 	// Проверяем корректность данных 
-	if steps < 0 || height <= 0 || duration < 0 {
-		return 0, fmt.Errorf("invalid input: steps=%d, height=%.2f, duration=%s", steps, height, duration)
+	if steps <= 0 || height <= 0 || duration <= 0 || weight <= 0 {
+		return 0, fmt.Errorf("invalid input: steps=%d, height=%.2f, duration=%s, weigt = %.2f", steps, height, duration, weight)
 	} 
 	
 	speed := meanSpeed(steps, height, duration)
@@ -133,8 +137,8 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	
 	// Проверяем корректность данных 
-	if steps < 0 || height <= 0 || duration < 0 {
-		return 0, fmt.Errorf("invalid input: steps=%d, height=%.2f, duration=%s", steps, height, duration)
+	if steps <= 0 || height <= 0 || duration <= 0 || weight <= 0 {
+		return 0, fmt.Errorf("invalid input: steps=%d, height=%.2f, duration=%s, weigt = %.2f", steps, height, duration, weight)
 	} 
 	
 	speed := meanSpeed(steps, height, duration)

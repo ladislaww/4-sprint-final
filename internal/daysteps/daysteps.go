@@ -29,8 +29,8 @@ func parsePackage(data string) (int, time.Duration, error) {
 	if err != nil {
 		return 0, 0, fmt.Errorf("incorrect number of steps entered")
 	}
-	if numberOfSteps == 0 {
-		return 0, 0, fmt.Errorf("the number of steps cannot be zero")
+	if numberOfSteps <= 0 {
+		return 0, 0, fmt.Errorf("the number of steps cannot be zero or negative")
 	}
 
 	// Вычленяем из слайса время прогулки
@@ -38,8 +38,8 @@ func parsePackage(data string) (int, time.Duration, error) {
 	if err != nil {
 		return 0, 0, fmt.Errorf("activity duration parsing error")
 	}
-	if walkingDuration == 0 {
-		return 0, 0, fmt.Errorf("the duration time of an walking cannot be zero")
+	if walkingDuration <= 0 {
+		return 0, 0, fmt.Errorf("the duration time of an walking cannot be zero or negative")
 	}
 
 	return numberOfSteps, walkingDuration, nil
@@ -52,7 +52,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	if err != nil {
 		return ""
 	} 
-	if numberOfSteps == 0 || walkingDuration == 0 { 
+	if numberOfSteps <= 0 || walkingDuration <= 0 { 
 		return ""
 	} 
 	
@@ -64,7 +64,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	
 	
 	// Сохраняем все данные в одну строку 
-	resultStr := fmt.Sprintf("Количество шагов: %d.\nДистанция составила: %.2f км.\nВы сожгли: %.2f ккал.", numberOfSteps, distance, walkingCalories)
+	resultStr := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.", numberOfSteps, distance, walkingCalories)
 
 	return resultStr
 
