@@ -28,7 +28,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 	// Вычленяем из слайса кол-во шагов
 	numberOfSteps, err := strconv.Atoi(splitedData[0])
 	if err != nil {
-		return 0, 0, fmt.Errorf("incorrect number of steps entered")
+		return 0, 0, fmt.Errorf("incorrect number of steps entered: %w", err)
 	}
 	if numberOfSteps <= 0 {
 		return 0, 0, fmt.Errorf("the number of steps cannot be zero or negative")
@@ -37,7 +37,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 	// Вычленяем из слайса время прогулки
 	walkingDuration, err := time.ParseDuration(splitedData[1])
 	if err != nil {
-		return 0, 0, fmt.Errorf("activity duration parsing error")
+		return 0, 0, fmt.Errorf("activity duration parsing error: %w", err)
 	}
 	if walkingDuration <= 0 {
 		return 0, 0, fmt.Errorf("the duration time of an walking cannot be zero or negative")
